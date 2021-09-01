@@ -6,8 +6,6 @@ FILE_NAME = "result.txt"
 
 
 def initialize_cpu(file_path: str) -> None:
-    print(file_path)  # apagar antes de submeter!
-
     cpu = CPU(file_path)
     result = cpu.process()
     write_result_to_file(result)
