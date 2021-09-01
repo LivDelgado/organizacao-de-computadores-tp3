@@ -24,6 +24,12 @@ class CPU:
     def miss_rate(self):
         return self.miss_count/self.instruction_memory.count_read_instructions()
 
+    def increment_miss_count(self):
+        self.miss_count += 1
+
+    def increment_hit_count(self):
+        self.hit_count += 1
+
     def process(self) -> str:
         """
         cpu main method
