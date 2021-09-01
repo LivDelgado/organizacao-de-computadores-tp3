@@ -7,12 +7,27 @@ class InstructionMemory:
         self.instructions: List[Instruction] = []
 
     def add_instruction(self, address: str, operation_type: int, write_data: Optional[str]) -> None:
+        """
+        add instruction to list
+        :param address: instruction address
+        :param operation_type: instruction op type (read or write)
+        :param write_data: data to be written (needed if op type is write)
+        :return: None
+        """
         self.instructions.append(Instruction(address, operation_type, write_data))
 
     def count_read_instructions(self) -> int:
+        """
+        count number of read instructions
+        :return: number of read instructions
+        """
         return len([i for i in self.instructions if i.operation_type is OperationType.READ])
 
     def count_write_instructions(self) -> int:
+        """
+        count number of write instructions
+        :return: number of write instructions
+        """
         return len([i for i in self.instructions if i.operation_type is OperationType.WRITE])
 
 
@@ -33,7 +48,12 @@ class Instruction:
 
         return string_self
 
-    def change_result(self, result):
+    def change_result(self, result) -> None:
+        """
+        update instruction's result
+        :param result: instruction result
+        :return: None
+        """
         self.result = result
 
 
