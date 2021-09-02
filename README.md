@@ -19,3 +19,8 @@ Exemplo
 ```shell script
 python3 main.py ./tests/in1.txt
 ``` 
+
+#### Executando testes
+```shell script
+python3 run_tests.py
+``` 
