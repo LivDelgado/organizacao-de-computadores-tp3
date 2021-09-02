@@ -1,10 +1,10 @@
-from typing import Dict, Optional, List, Tuple
+from typing import Dict, List, Tuple
 
 from computer.data_memory import DataMemory
 from utils.converter import convert_to_32_bit, convert_to_2_bit
 
 
-class Cache:  # TODO
+class Cache:
     def __init__(self):
         self.l2_memory: DataMemory = DataMemory()
         self.number_of_words_in_block: int = 4

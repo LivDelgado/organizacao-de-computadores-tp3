@@ -1,10 +1,8 @@
 from typing import Tuple
 
 from computer.cache import Cache
-from computer.data_memory import DataMemory
 from computer.decoder import Decoder
 from computer.instruction_memory import *
-from utils.converter import convert_to_32_bit
 
 
 class CPU:
@@ -24,10 +22,18 @@ class CPU:
     def miss_rate(self):
         return round(self.miss_count/self.instruction_memory.count_read_instructions(), 3)
 
-    def increment_miss_count(self):
+    def increment_miss_count(self) -> None:
+        """
+        increment miss count by one
+        :return: None
+        """
         self.miss_count += 1
 
     def increment_hit_count(self):
+        """
+        increment hit count by one
+        :return: None
+        """
         self.hit_count += 1
 
     def process(self) -> str:
