@@ -4,6 +4,7 @@ from computer.cache import Cache
 from computer.decoder import Decoder
 from computer.instruction_memory import *
 
+FLOAT_PRECISION = 3
 
 class CPU:
     def __init__(self, file_path):
@@ -16,11 +17,11 @@ class CPU:
 
     @property
     def hit_rate(self):
-        return round(self.hit_count/self.instruction_memory.count_read_instructions(), 3)
+        return round(self.hit_count/self.instruction_memory.count_read_instructions(), FLOAT_PRECISION)
 
     @property
     def miss_rate(self):
-        return round(self.miss_count/self.instruction_memory.count_read_instructions(), 3)
+        return round(self.miss_count/self.instruction_memory.count_read_instructions(), FLOAT_PRECISION)
 
     def increment_miss_count(self) -> None:
         """
