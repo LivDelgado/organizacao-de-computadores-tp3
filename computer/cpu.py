@@ -81,6 +81,7 @@ class CPU:
         :param address: address to be read from
         :return: data read in the address, if found
         """
+        data = self.l1_memory.read(address)
         return None # TODO
 
     def read_from_l2(self, address: str) -> Optional[str]:
@@ -89,6 +90,8 @@ class CPU:
         :param address: address to be read from
         :return: data read in the address, if found
         """
+        # read from data memory
+        # write to cache
         return None # TODO
 
     def write_data(self, instruction) -> None:

@@ -12,10 +12,10 @@ $ bash ./execute.sh ./tests/in1.txt
 
 #### Executando script Python
 ```shell script
-python main.py <caminho_do_arquivo>
+python3 main.py <caminho_do_arquivo>
 ``` 
 
 Exemplo
 ```shell script
-python main.py ./tests/in1.txt
+python3 main.py ./tests/in1.txt
 ``` 
