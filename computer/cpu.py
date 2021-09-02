@@ -4,6 +4,7 @@ from computer.cache import Cache
 from computer.data_memory import DataMemory
 from computer.decoder import Decoder
 from computer.instruction_memory import *
+from utils.converter import convert_to_32_bit
 
 
 class CPU:
@@ -11,18 +12,17 @@ class CPU:
         self.instruction_memory: InstructionMemory = InstructionMemory()
         self.decoder: Decoder = Decoder(file_path, self.instruction_memory)
         self.l1_memory: Cache = Cache()
-        self.l2_memory: DataMemory = DataMemory()
 
         self.hit_count: int = 0
         self.miss_count: int = 0
 
     @property
     def hit_rate(self):
-        return self.hit_count/self.instruction_memory.count_read_instructions()
+        return round(self.hit_count/self.instruction_memory.count_read_instructions(), 3)
 
     @property
     def miss_rate(self):
-        return self.miss_count/self.instruction_memory.count_read_instructions()
+        return round(self.miss_count/self.instruction_memory.count_read_instructions(), 3)
 
     def increment_miss_count(self):
         self.miss_count += 1
@@ -60,39 +60,19 @@ class CPU:
             instruction.change_result(InstructionResult.WROTE)
             self.write_data(instruction)
 
-    def read_from_memory(self, instruction) -> Tuple[InstructionResult, str]:
+    def read_from_memory(self, instruction) -> Tuple[InstructionResult, List[str]]:
         """
         read data from memory - controls the whole reading op
         :param instruction: read instruction to be executed
         :return: instruction result and data read
         """
-        data = self.read_from_l1(instruction.address)
-        if data:
+        hit, data = self.l1_memory.read(address=instruction.address)
+        if hit:
+            self.increment_hit_count()
             return InstructionResult.HIT, data
-
-        # didn't find data in cache memory, will look for it on data memory
-        data = self.read_from_l2(instruction.address)
-        # TODO: save data to l1
-        return InstructionResult.MISS, data
-
-    def read_from_l1(self, address: str) -> Optional[str]:
-        """
-        read data from L1 memory (in this case, cache)
-        :param address: address to be read from
-        :return: data read in the address, if found
-        """
-        data = self.l1_memory.read(address)
-        return None # TODO
-
-    def read_from_l2(self, address: str) -> Optional[str]:
-        """
-        read data from L2 memory (in this case, memory data)
-        :param address: address to be read from
-        :return: data read in the address, if found
-        """
-        # read from data memory
-        # write to cache
-        return None # TODO
+        else:
+            self.increment_miss_count()
+            return InstructionResult.MISS, data
 
     def write_data(self, instruction) -> None:
         """
@@ -101,7 +81,7 @@ class CPU:
         :param instruction: write instruction to be executed
         :return: None
         """
-        # TODO
+        self.l1_memory.write(instruction.address, instruction.write_data)
 
     def get_instructions_outputs(self) -> str:
         """
